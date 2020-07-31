@@ -34,7 +34,7 @@ from filterpy.kalman import KalmanFilter
 
 import common
 #import common as CocoPart
-from common import CocoPart
+from tf_pose.common import CocoPart
 
 try:
   from numba import jit
@@ -318,8 +318,8 @@ def trackor_skeletons(npimg, currentFrame, trackers, humans):
             d_min = image_w ** 2
             Id_ord = -1
             a = 0 
-            centrox = trackers[c,0] + ((trackers[c,2]-trackers[c,0])-trackers[c,0])/2
-            centroy = trackers[c,1] + ((trackers[c,3]-trackers[c,1])-trackers[c,1])/2
+            centrox = trackers[c,0] + (trackers[c,2]-trackers[c,0])/2
+            centroy = trackers[c,1] + (trackers[c,3]-trackers[c,1])/2
             for human in humans:
                 if 0 not in human.body_parts.keys():
                     continue
