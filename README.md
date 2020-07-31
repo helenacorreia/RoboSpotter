@@ -11,7 +11,7 @@ $ pip3 install -r requirements.txt
 
 ## PAF Process
 
-Download and Extract SWIG (swigwin-3.0.12)
+Download and Extract SWIG (swigwin-3.0.12) https://sourceforge.net/projects/swig/files/swigwin/swigwin-3.0.12/swigwin-3.0.12.zip/download
 
 Add Swig to Path
 
@@ -26,6 +26,6 @@ $ python3 setup.py build_ext --inplace
 
 ## Copy coco API
 
-$ cd PythonAPI
+$ cd cocoapi/PythonAPI
 
 $ python setup.py build_ext --inplace
