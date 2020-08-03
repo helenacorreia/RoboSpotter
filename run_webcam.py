@@ -18,12 +18,13 @@ import argparse
 
 from tf_pose.estimator import TfPoseEstimator, PoseEstimator, BodyPart, Human
 from tf_pose.networks import get_graph_path, model_wh
-from sort import Sort, parse_args, trackor_skeletons
+from sort import Sort, KalmanBoxTracker
 from operator import itemgetter
 
 from tf_pose.pafprocess import pafprocess
 
 from file_saving_functions import write_notepad
+
 
 import math
 import pickle 
@@ -65,6 +66,74 @@ def delet():
         if file == "C:/Users/lenaa/Desktop/tf-pose-estimation/data/train/tfpose/det/det.txt":
             os.remove(file)
 
+
+def trackor_skeletons(npimg, currentFrame, trackers, humans):
+    image_h, image_w = npimg.shape[:2]
+    frame_skeletons = []
+    #    with open('C:/Users/lenaa/Desktop/tf-pose-estimation/output/tfpose/det/det.txt','w') as out_file:
+    #        for d in trackers:
+    #            print('%d,%d,%.2f,%.2f,%.2f,%.2f,1,-1,-1,-1'%(currentFrame, d[4],d[0],d[1],d[2]-d[0],d[3]-d[1]),file=out_file)
+    #            cv2.putText(npimg, "id: %d" % (int(d[4])), (int(d[0]),int(d[1])),0, 1, (255,255,255),2)
+
+    #    pontos = []
+    #    for human in humans:
+    #        pontos_comprimento = []
+    #        if len(humans) > 1:
+    #            for i in range(common.CocoPart.Background.value):
+    #                if i not in human.body_parts.keys():
+    #                    continue
+    #                #print(i)
+    #                ponto = i
+    #                pontos_comprimento.append(ponto)
+    #            num_pontos = len(pontos_comprimento)
+    #            pontos.append(num_pontos)
+    #        print(pontos)
+    #        oi = len(human.body_parts.keys())
+    #        print(oi)
+
+    pontos = []
+    #    for human in humans:
+    #        if len(humans) > 1:
+    #            ponto = len(human.body_parts.keys())
+    #            pontos.append(ponto)
+    #    print(pontos)
+
+    if len(humans) > 1:
+        for c in range(len(trackers)):
+            d_min = image_w ** 2
+            Id_ord = -1
+            a = 0
+            centrox = trackers[c, 0] + (trackers[c, 2] - trackers[c, 0]) / 2
+            centroy = trackers[c, 1] + (trackers[c, 3] - trackers[c, 1]) / 2
+            for human in humans:
+                if 0 not in human.body_parts.keys():
+                    continue
+                x1 = human.body_parts[0].x * image_w
+                y1 = human.body_parts[0].y * image_h
+                distancia = math.sqrt((x1 - centrox) ** 2 + (y1 - centroy) ** 2)
+                if distancia < d_min:
+                    d_min = distancia
+                    Id_ord = a
+                a += 1
+
+            ponto = len(humans[Id_ord].body_parts.keys())
+            pontos.append(ponto)
+            print(pontos)
+            if pontos[c] == 18:
+                print('ola')
+                frame_skeleton = []
+                frame_skeleton.append(currentFrame)
+                frame_skeleton.append(int(trackers[c, 4]))
+                for i in range(18):
+                    x = humans[Id_ord].body_parts[i].x * image_w
+                    y = humans[Id_ord].body_parts[i].y * image_h
+                    frame_skeleton.append(x)
+                    frame_skeleton.append(y)
+
+                frame_skeletons.append(frame_skeleton)
+    return (frame_skeletons)
+
+
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser(description='tf-pose-estimation realtime webcam')
@@ -105,6 +174,7 @@ if __name__ == '__main__':
                 if os.path.exists(det_file_path):
                     os.remove(det_file_path)
                 mot_tracker = Sort()  # create instance of the SORT tracker
+                KalmanBoxTracker.count = 0
 
                 nome = filename[:-4]
                 print(nome)

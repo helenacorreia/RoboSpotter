@@ -1,12 +1,12 @@
 # RoboSpotter
 Install:
 
+$ pip install -r requirements.txt
+
+## TF Pose
 $ git clone https://www.github.com/ildoonet/tf-pose-estimation
 
 $ cd tf-pose-estimation
-
-$ pip3 install -r requirements.txt
-
 
 
 ## PAF Process
@@ -21,7 +21,7 @@ $ cd tf_pose/pafprocess
 
 $ swig -python -c++ pafprocess.i
 
-$ python3 setup.py build_ext --inplace
+$ python setup.py build_ext --inplace
 
 
 ## Copy coco API
