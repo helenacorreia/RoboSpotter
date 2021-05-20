@@ -1,4 +1,14 @@
 # RoboSpotter
+
+A violence detector in videos
+
+Helena Correia
+José Henrique Brito
+
+## Dataset:
+
+https://ipcapt-my.sharepoint.com/:f:/g/personal/jbrito_ipca_pt/EnwrKzWGR4ZPuR3RgH9uWQ0Bbqv15lpKx3apaFLXu98Ghg?e=6bJr6P
+
 Install:
 
 $ pip install -r requirements.txt
