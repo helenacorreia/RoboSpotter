@@ -3,6 +3,7 @@
 A violence detector in videos
 
 Helena Correia
+
 José Henrique Brito
 
 ## Dataset:
