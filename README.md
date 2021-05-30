@@ -13,17 +13,19 @@ José Henrique Brito
 
 https://ipcapt-my.sharepoint.com/:f:/g/personal/jbrito_ipca_pt/EnwrKzWGR4ZPuR3RgH9uWQ0Bbqv15lpKx3apaFLXu98Ghg?e=6bJr6P
 
+## Application
+
 Install:
 
 $ pip install -r requirements.txt
 
-## TF Pose
+### TF Pose
 $ git clone https://www.github.com/ildoonet/tf-pose-estimation
 
 $ cd tf-pose-estimation
 
 
-## PAF Process
+### PAF Process
 
 Download and Extract SWIG (swigwin-3.0.12) https://sourceforge.net/projects/swig/files/swigwin/swigwin-3.0.12/swigwin-3.0.12.zip/download
 
@@ -38,7 +40,7 @@ $ swig -python -c++ pafprocess.i
 $ python setup.py build_ext --inplace
 
 
-## Copy coco API
+### Copy coco API
 
 $ cd cocoapi/PythonAPI
 
